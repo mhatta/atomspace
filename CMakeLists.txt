@@ -313,15 +313,8 @@ MESSAGE(STATUS "${PROTOBUF_DIR_MESSAGE}")
 #
 # Search for Python3 first, and use that, if found. Else use Python2.
 
-FIND_PACKAGE(Python3Interp)
-IF (3.4.0 VERSION_LESS ${PYTHON3_VERSION_STRING})
-	SET (HAVE_PY_INTERP 1)
-	SET (PYTHON_VER python3.5)
-	MESSAGE(STATUS "Python ${PYTHON3_VERSION_STRING} interpreter found.")
-ENDIF()
-
 IF (NOT HAVE_PY_INTERP)
-	FIND_PACKAGE(PythonInterp)
+	FIND_PACKAGE(PythonInterp 2.7 EXACT REQUIRED)
 	IF (2.7.0 VERSION_LESS ${PYTHON_VERSION_STRING})
 		SET (HAVE_PY_INTERP 1)
 		SET (PYTHON_VER python2.7)
@@ -339,7 +332,6 @@ IF (PYTHONLIBS_FOUND AND
 ELSE()
 	MESSAGE(STATUS "Python libraries NOT found.")
 ENDIF()
-
 
 # Cython is used to generate python bindings.
 IF(HAVE_PY_INTERP)
